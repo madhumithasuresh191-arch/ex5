@@ -152,7 +152,7 @@ urlpatterns = [
 ~~~
 
 ## SERVER SIDE PROCESSING:
-<img width="1355" height="922" alt="Screenshot 2025-12-12 104139" src="https://github.com/user-attachments/assets/7c908d58-ce09-4017-9cb8-980bfb86e69d" />
+<img width="1920" height="1080" alt="Screenshot 2025-12-12 105113" src="https://github.com/user-attachments/assets/b5dbb755-9c80-406c-8828-866ff86aaeff" />
 
 
 ## HOMEPAGE:
