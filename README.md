@@ -32,119 +32,131 @@ Create a HTML file to implement form based input and output.
 ### Step 6:
 Publish the website in the given URL.
 
-## PROGRAM :#math.html
+## PROGRAM :
 ~~~
+math.html
+
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Area of Rectangle</title>
-
-    <style>
-        body {
-            background-color: rgb(217, 0, 255);
-            font-size: 20px;
-        }
-
-        .box {
-            width: 500px;
-            height: 300px;
-            background-color: rgb(226, 188, 217);
-            margin: 150px auto;
-            border: 7px dashed rgb(128, 0, 32);
-        }
-
-        h1 {
-            color: rgb(144, 0, 255);
-            text-align: center;
-            padding-top: 20px;
-        }
-
-        .formelt {
-            color: rgb(154, 78, 139);
-            text-align: center;
-            margin-top: 7px;
-            margin-bottom: 6px;
-        }
-    </style>
+<title>Power of a Lamp</title>
+<style>
+    body {
+        background-color: powderblue;
+        font-family: Arial;
+    }
+    .box {
+        width: 380px;
+        background-color: plum;
+        color: black;
+        padding: 20px;
+        margin: auto;
+        margin-top: 120px;
+        border: 5px dotted black;
+        text-align: left;
+    }
+    input {
+        width: 150px;
+        padding: 5px;
+    }
+    button {
+        margin-top: 10px;
+        padding: 5px 15px;
+    }
+</style>
 </head>
-
 <body>
 
-<div class="edge">
-    <div class="box">
-        <h1>Area of a Rectangle</h1>
+<div class="box">
+    <h2 style="text-align:center;">Power of a Lamp</h2>
 
-        <form method="POST">
-            {% csrf_token %}
-            
-            <div class="formelt">
-                Length :
-                <input type="text" name="length" value
-            </div>
+    Current : 
+    <input type="text" id="i"> (in A)
+    <br><br>
 
-            <div class="formelt">
-                Breadth :
-                <input type="text" name="breadth" valu
-            </div>
+    Resistance : 
+    <input type="text" id="r"> (in Ω)
+    <br><br>
 
-            <div class="formelt">
-                <input type="submit" value="Calculate"
-            </div>
+    <button onclick="calc()">Calculate</button>
+    <br><br>
 
-            <div class="formelt">
-                Area :
-                <input type="text" name="area" value="
-            </div>
-        </form>
-
-    </div>
+    Power : 
+    <input type="text" id="p" readonly> W
 </div>
+
+<script>
+function calc() {
+    let I = parseFloat(document.getElementById("i").value);
+    let R = parseFloat(document.getElementById("r").value);
+    
+    if (!isNaN(I) && !isNaN(R)) {
+        document.getElementById("p").value = (I * I * R).toFixed(0);
+    } else {
+        document.getElementById("p").value = "Error";
+    }
+}
+</script>
 
 </body>
 </html>
-#views.py
+
+
+views.py
+
 from django.shortcuts import render
 
-def rectanglearea(request):
+def lamp_power(request):
+    print("Request :", request)
     context = {}
-    context['area'] = "0"
-    context['l'] = "0"
-    context['b'] = "0"
+    context['power'] = "0"
+    context['I'] = "0"
+    context['R'] = "0"
 
-    if request.method == 'POST':
+    if request.method == "POST":
         print("POST method is used")
-        l = request.POST.get('length', '0')
-        b = request.POST.get('breadth', '0')
 
-        print("length=", l)
-        print("breadth=", b)
+        I = request.POST.get('current', '0')
+        R = request.POST.get('resistance', '0')
 
-        area = int(l) * int(b)
-        context['area'] = area
-        context['l'] = l
-        context['b'] = b
+        print("Current :", I)
+        print("Resistance :", R)
 
-        print("Area=", area)
+        try:
+            power = (float(I) * float(I)) * float(R)
+        except:
+            power = "Invalid"
+
+        context['power'] = power
+        context['I'] = I
+        context['R'] = R
+
+        print("Power :", power)
 
     return render(request, 'mathapp/math.html', context)
-#urls.py
-    from django.contrib import admin
+
+
+urls.py
+
+from django.contrib import admin
 from django.urls import path
-from mathapp import views
+from mathapp import views   
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('areaofrectangle/', views.rectanglearea, name="areaofrectangle"),
-    path('', views.rectanglearea, name="areaofrectangleroot"),
+
+    path('lamp-power/', views.lamp_power, name='lamp_power'),
+
+    path('', views.lamp_power, name='lamp_power_root'),
 ]
 ~~~
 
-
 ## SERVER SIDE PROCESSING:
-<img width="1893" height="1063" alt="Screenshot 2025-12-12 095008" src="https://github.com/user-attachments/assets/64f872f2-b179-4d87-a261-7b95f450df23" />
+<img width="1355" height="922" alt="Screenshot 2025-12-12 104139" src="https://github.com/user-attachments/assets/7c908d58-ce09-4017-9cb8-980bfb86e69d" />
 
 
 ## HOMEPAGE:
-<img width="1920" height="1080" alt="Screenshot 2025-12-12 095337" src="https://github.com/user-attachments/assets/d544ae9c-bfb0-4b6b-88d1-57f52cf56330" />
+<img width="1920" height="1077" alt="Screenshot 2025-12-12 104059" src="https://github.com/user-attachments/assets/617049f8-dc56-4df5-ac28-835241f4669d" />
 
 
 ## RESULT:
